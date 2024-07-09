@@ -32,6 +32,9 @@ module.exports = async (env, options) => {
     },
     resolve: {
       extensions: [".js", ".jsx", ".html"],
+      alias: {
+        '@microsoft/office-js': path.resolve(__dirname, 'node_modules/@microsoft/office-js/dist/office.js')
+      }
     },
     module: {
       rules: [
