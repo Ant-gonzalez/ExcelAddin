@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
-
+require('dotenv').config();
+const path = require('path');
 const devCerts = require("office-addin-dev-certs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 
-const urlDev = "https://localhost:3000/";
-const urlProd = "https://www.contoso.com/"; // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
+const devUrl = process.env.DEV_URL;
+const prodUrl = process.env.PROD_URL;
 
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
@@ -24,6 +25,9 @@ module.exports = async (env, options) => {
       commands: "./src/commands/commands.js",
     },
     output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].bundle.js',
+      publicPath: '/ExcelAddin/', // This should match your repository name
       clean: true,
     },
     resolve: {
@@ -69,7 +73,7 @@ module.exports = async (env, options) => {
               if (dev) {
                 return content;
               } else {
-                return content.toString().replace(new RegExp(urlDev, "g"), urlProd);
+                return content.toString().replace(new RegExp(devUrl, "g"), prodUrl);
               }
             },
           },
