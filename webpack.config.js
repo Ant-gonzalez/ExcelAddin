@@ -1,18 +1,7 @@
-/* eslint-disable no-undef */
-require('dotenv').config();
 const path = require('path');
-const devCerts = require("office-addin-dev-certs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-
-const devUrl = process.env.DEV_URL;
-const prodUrl = process.env.PROD_URL;
-
-async function getHttpsOptions() {
-  const httpsOptions = await devCerts.getHttpsServerOptions();
-  return { ca: httpsOptions.ca, key: httpsOptions.key, cert: httpsOptions.cert };
-}
 
 module.exports = async (env, options) => {
   const dev = options.mode === "development";
@@ -27,14 +16,11 @@ module.exports = async (env, options) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].bundle.js',
-      publicPath: '/ExcelAddin/', // This should match your repository name
+      publicPath: '/ExcelAddin/', // Adjust this if necessary
       clean: true,
     },
     resolve: {
       extensions: [".js", ".jsx", ".html"],
-      alias: {
-        '@microsoft/office-js': path.resolve(__dirname, 'node_modules/@microsoft/office-js/dist/office.js')
-      }
     },
     module: {
       rules: [
@@ -66,20 +52,10 @@ module.exports = async (env, options) => {
       new CopyWebpackPlugin({
         patterns: [
           {
-            from: "assets/*",
-            to: "assets/[name][ext][query]",
+            from: path.resolve(__dirname, 'node_modules', '@microsoft', 'office-js', 'dist', 'office.js'),
+            to: 'office.js',
           },
-          {
-            from: "manifest*.xml",
-            to: "[name]" + "[ext]",
-            transform(content) {
-              if (dev) {
-                return content;
-              } else {
-                return content.toString().replace(new RegExp(devUrl, "g"), prodUrl);
-              }
-            },
-          },
+          // Add other patterns as needed
         ],
       }),
       new HtmlWebpackPlugin({
@@ -102,8 +78,8 @@ module.exports = async (env, options) => {
         "Access-Control-Allow-Origin": "*",
       },
       server: {
-        type: "https",
-        options: env.WEBPACK_BUILD || options.https !== undefined ? options.https : await getHttpsOptions(),
+        type: "https", // Ensure this matches your setup
+        // Other server options as needed
       },
       port: process.env.npm_package_config_dev_server_port || 3000,
     },
