@@ -16,8 +16,8 @@
     <Host Name="Workbook"/>
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://ant-gonzalez.github.io/ExcelAddin/taskpane.html"/>
-    <Url id="commands" DefaultValue="https://ant-gonzalez.github.io/ExcelAddin/commands.html"/>
+    <SourceLocation DefaultValue="https://ant-gonzalez.github.io/ExcelAddin/src/taskpane/taskpane.html"/>
+    <Url id="commands" DefaultValue="https://ant-gonzalez.github.io/ExcelAddin/src/commands/commands.html"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
@@ -69,8 +69,8 @@
       </bt:Images>
       <bt:Urls>
         <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812"/>
-        <bt:Url id="Commands.Url" DefaultValue="https://ant-gonzalez.github.io/ExcelAddin/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://ant-gonzalez.github.io/ExcelAddin/taskpane.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://ant-gonzalez.github.io/ExcelAddin/src/commands/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://ant-gonzalez.github.io/ExcelAddin/src/taskpane/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
